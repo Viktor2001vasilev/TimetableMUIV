@@ -14,6 +14,9 @@ public class MainPage {
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
+    public WebDriver getDriver() {
+        return driver;
+    }
     //----------------------------------------------------------------------------------------------------------
 
     //---------------------------------------------------Элементы-----------------------------------------------
@@ -25,9 +28,15 @@ public class MainPage {
 
     @FindBys( { @FindBy (xpath = "//table//td//div") } )
     private List <WebElement> timeTablePictureList;
+
+    @FindBy (xpath = "//button[text () = 'Настройки']")
+    private WebElement settingsListBtn;
+
+    @FindBys ( { @FindBy (xpath = "//div[@class='dropdown-con2']//a") } )
+    private List<WebElement> settingsList;
     //----------------------------------------------------------------------------------------------------------
 
-    //---------------------------------------------------действия-----------------------------------------------
+    //------------------------------------------простые действия с элементами-----------------------------------
     public WebElement getGroupListBtn() {
         return groupListBtn;
     }
@@ -37,14 +46,23 @@ public class MainPage {
     public List<WebElement> getTimeTablePictureList() {
         return timeTablePictureList;
     }
-    public void hoverGroupListBtn(Actions actions) {
+    public List<WebElement> getSettingsList() {
+        return settingsList;
+    }
+    public void hoverGroupListBtn(Actions actions) { // установить фокус на кнопку "список групп"
         actions.moveToElement(groupListBtn).perform();
     }
-    public void pressGroupListElement(int numOfElement) {
+    public void clickGroupListElement(int numOfElement) { // нажать на выбранную кнопку из выпадающего списка "список групп"
         groupList.get(numOfElement).click();
     }
-    public boolean checkVisibilityOfTimeTablePicture(int numOfElement) {
+    public boolean checkVisibilityOfTimeTablePicture(int numOfElement) { // проверка отображения изображения с расписанием
         return timeTablePictureList.get(numOfElement).isDisplayed();
+    }
+    public void hoverSettingsListBtn(Actions actions) {
+        actions.moveToElement(settingsListBtn).perform();
+    }
+    public void clickSettingsListElement(int numOfElement) {
+        settingsList.get(numOfElement).click();
     }
     //----------------------------------------------------------------------------------------------------------
 }

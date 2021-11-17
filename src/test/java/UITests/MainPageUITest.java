@@ -1,5 +1,6 @@
 package UITests;
 
+import PageObj.ComplexActions;
 import PageObj.MainPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,8 +10,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.reporters.jq.Main;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPageUITest {
     private WebDriver MainPageUITestDriver;
@@ -34,9 +38,22 @@ public class MainPageUITest {
     public void mainPageUITest() {
         MainPage mainPage = PageFactory.initElements(MainPageUITestDriver, MainPage.class);
         Actions actions = new Actions(MainPageUITestDriver);
-        mainPage.hoverGroupListBtn(actions);
-        mainPage.pressGroupListElement(0);
-        Assert.assertFalse(mainPage.checkVisibilityOfTimeTablePicture(0));
-        Assert.assertTrue(mainPage.checkVisibilityOfTimeTablePicture(1));
+        ComplexActions complexActions = new ComplexActions(mainPage, actions);
+
+        // проверка нажатия на кнопку "Скрыть группу" 1
+        Assert.assertTrue(complexActions.hideGroupTimeTable(0));
+        mainPage.clickGroupListElement(0); //возврат к первоначальному состоянию
+        // проверка нажатия на кнопку "Скрыть группу" 2
+        Assert.assertTrue(complexActions.hideGroupTimeTable(1));
+        mainPage.clickGroupListElement(1); //возврат к первоначальному состоянию
+        // проверка нажатия на кнопку "Скрыть обе группы"
+        Assert.assertTrue(complexActions.hideGroupTimeTable(2));
+        mainPage.clickGroupListElement(2); //возврат к первоначальному состоянию
+
+        // проверка нажатия на кнопку "Настройки" -> "Скачать группа.." 1
+        Assert.assertTrue(complexActions.clickGroupTimeTableSettingsDownloadBtn(0));
+        // проверка нажатия на кнопку "Настройки" -> "Скачать группа.." 2
+        Assert.assertTrue(complexActions.clickGroupTimeTableSettingsDownloadBtn(1));
+
     }
 }
