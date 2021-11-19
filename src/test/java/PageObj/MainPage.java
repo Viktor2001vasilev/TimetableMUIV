@@ -34,6 +34,12 @@ public class MainPage {
 
     @FindBys ( { @FindBy (xpath = "//div[@class='dropdown-con2']//a") } )
     private List<WebElement> settingsList;
+
+    @FindBy (xpath = "//button[text() = 'Прочее']")
+    private WebElement otherBtn;
+
+    @FindBys ( { @FindBy (xpath = "//div[@class = 'dropdown-con3']//a") } )
+    private List<WebElement> otherList;
     //----------------------------------------------------------------------------------------------------------
 
     //------------------------------------------простые действия с элементами-----------------------------------
@@ -49,6 +55,15 @@ public class MainPage {
     public List<WebElement> getSettingsList() {
         return settingsList;
     }
+    public WebElement getSettingsListBtn() {
+        return settingsListBtn;
+    }
+    public WebElement getOtherBtn() {
+        return otherBtn;
+    }
+    public List<WebElement> getOtherList() {
+        return otherList;
+    }
     public void hoverGroupListBtn(Actions actions) { // установить фокус на кнопку "список групп"
         actions.moveToElement(groupListBtn).perform();
     }
@@ -63,6 +78,12 @@ public class MainPage {
     }
     public void clickSettingsListElement(int numOfElement) {
         settingsList.get(numOfElement).click();
+    }
+    public void hoverOtherBtn(Actions actions) {
+        actions.moveToElement(otherBtn).perform();
+    }
+    public void clickOtherListElement(int numOfElement) {
+        otherList.get(numOfElement).click();
     }
     //----------------------------------------------------------------------------------------------------------
 }

@@ -1,7 +1,6 @@
 package PageObj;
 
 import org.openqa.selenium.interactions.Actions;
-
 import java.util.ArrayList;
 
 public class ComplexActions {
@@ -32,10 +31,23 @@ public class ComplexActions {
         }
     }
 
-    public boolean clickGroupTimeTableSettingsDownloadBtn(int numOfElement) {
+    public boolean clickGroupTimeTableSettingsDownloadBtn(int numOfElement) { // проверка нажатия на кнопку из выпадающего списка "Настройки"
         System.out.println("Проверка нажатия на " + (numOfElement + 1) + " кнопку из списка \"Настройки\"");
         mainPage.hoverSettingsListBtn(actions);
         mainPage.clickSettingsListElement(numOfElement);
+        ArrayList<String> browserTabs = new ArrayList<>(mainPage.getDriver().getWindowHandles());
+        mainPage.getDriver().switchTo().window(browserTabs.get(1));
+        boolean check;
+        check = mainPage.getDriver().getTitle().equals("Sign in - Google Accounts");
+        mainPage.getDriver().close();
+        mainPage.getDriver().switchTo().window(browserTabs.get(0));
+        return check;
+    }
+
+    public boolean clickOtherShareBtn() { // проверка нажатия на кнопку "Поделиться" из выпадающего списка "Прочее"
+        System.out.println("Проверка нажатия на кнопку \"Поделиться\" из списка \"Прочее\"");
+        mainPage.hoverOtherBtn(actions);
+        mainPage.clickOtherListElement(0);
         ArrayList<String> browserTabs = new ArrayList<>(mainPage.getDriver().getWindowHandles());
         mainPage.getDriver().switchTo().window(browserTabs.get(1));
         boolean check;

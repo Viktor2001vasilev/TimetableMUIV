@@ -10,14 +10,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.reporters.jq.Main;
-
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainPageUITest {
-    private WebDriver MainPageUITestDriver;
+    private WebDriver mainPageUITestDriver;
 
 
     @BeforeTest
@@ -27,17 +23,17 @@ public class MainPageUITest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("http://f0591005.xsph.ru/mainT.html");
         driver.manage().window().maximize();
-        this.MainPageUITestDriver = driver;
+        this.mainPageUITestDriver = driver;
     }
     @AfterTest
     public void close() {
-        MainPageUITestDriver.close();
+        mainPageUITestDriver.close();
     }
 
     @Test
     public void mainPageUITest() {
-        MainPage mainPage = PageFactory.initElements(MainPageUITestDriver, MainPage.class);
-        Actions actions = new Actions(MainPageUITestDriver);
+        MainPage mainPage = PageFactory.initElements(mainPageUITestDriver, MainPage.class);
+        Actions actions = new Actions(mainPageUITestDriver);
         ComplexActions complexActions = new ComplexActions(mainPage, actions);
 
         // проверка нажатия на кнопку "Скрыть группу" 1
@@ -55,5 +51,7 @@ public class MainPageUITest {
         // проверка нажатия на кнопку "Настройки" -> "Скачать группа.." 2
         Assert.assertTrue(complexActions.clickGroupTimeTableSettingsDownloadBtn(1));
 
+        // проверка нажатия нна кнопку "Прочее" -> "Поделиться"
+        Assert.assertTrue(complexActions.clickOtherShareBtn());
     }
 }
