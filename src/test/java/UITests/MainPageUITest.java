@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +15,7 @@ import java.time.Duration;
 
 public class MainPageUITest {
     private WebDriver mainPageUITestDriver;
-
+    private WebDriverWait webDriverWait;
 
     @BeforeClass
     public void setUp() {
@@ -23,7 +24,9 @@ public class MainPageUITest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("http://f0591005.xsph.ru/mainT.html");
         driver.manage().window().maximize();
+        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.mainPageUITestDriver = driver;
+        this.webDriverWait = webDriverWait;
     }
     @AfterClass
     public void close() {
@@ -34,7 +37,7 @@ public class MainPageUITest {
     public void mainPageUITest() {
         MainPage mainPage = PageFactory.initElements(mainPageUITestDriver, MainPage.class);
         Actions actions = new Actions(mainPageUITestDriver);
-        ComplexActions complexActions = new ComplexActions(mainPage, actions);
+        ComplexActions complexActions = new ComplexActions(mainPage, actions, webDriverWait);
 
         // проверка нажатия на кнопку "Скрыть группу" 1
         Assert.assertTrue(complexActions.hideGroupTimeTable(0));

@@ -1,15 +1,21 @@
 package PageObj;
 
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class ComplexActions {
     //--------------------------------Передача объектов и конструктор для инициализации-------------------------
     private MainPage mainPage;
     private Actions actions;
-    public ComplexActions(MainPage mainPage, Actions actions){
+    private WebDriverWait webDriverWait;
+    public ComplexActions(MainPage mainPage, Actions actions, WebDriverWait webDriverWait){
         this.mainPage = mainPage;
         this.actions = actions;
+        this.webDriverWait = webDriverWait;
     }
     //----------------------------------------------------------------------------------------------------------
 
@@ -38,7 +44,8 @@ public class ComplexActions {
         ArrayList<String> browserTabs = new ArrayList<>(mainPage.getDriver().getWindowHandles());
         mainPage.getDriver().switchTo().window(browserTabs.get(1));
         boolean check;
-        check = mainPage.getDriver().getTitle().equals("Sign in - Google Accounts");
+        webDriverWait.until(ExpectedConditions.titleIs("Imgur: The magic of the Internet"));
+        check = mainPage.getDriver().getTitle().equals("Imgur: The magic of the Internet");
         mainPage.getDriver().close();
         mainPage.getDriver().switchTo().window(browserTabs.get(0));
         return check;
@@ -51,7 +58,8 @@ public class ComplexActions {
         ArrayList<String> browserTabs = new ArrayList<>(mainPage.getDriver().getWindowHandles());
         mainPage.getDriver().switchTo().window(browserTabs.get(1));
         boolean check;
-        check = mainPage.getDriver().getTitle().equals("Sign in - Google Accounts");
+        webDriverWait.until(ExpectedConditions.titleIs("Imgur: The magic of the Internet"));
+        check = mainPage.getDriver().getTitle().equals("Imgur: The magic of the Internet");
         mainPage.getDriver().close();
         mainPage.getDriver().switchTo().window(browserTabs.get(0));
         return check;
